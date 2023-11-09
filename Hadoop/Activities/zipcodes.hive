@@ -1,0 +1,17 @@
+-- Drop the tables
+DROP TABLE zipcodes;
+
+-- create tables
+CREATE TABLE zipcodes
+(RecordNumber int, Country string, City string, Zipcode int)
+PARTITIONED BY (state string)
+CLUSTERED BY (Zipcode) INTO 3 BUCKETS
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+
+-- Load data into zipcodes
+LOAD DATA LOCAL INPATH '/root/zipcodes.csv' INTO TABLE zipcodes;
+
+
+-- display data from PR state
+SELECT * FROM zipcodes WHERE state='PR';
